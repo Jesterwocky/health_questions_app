@@ -16,17 +16,17 @@ class CreateResponsesTable extends Migration
         $table->increments('id');
         $table->timestamps();
 
-        $table->integer('journal_entry_id');
+        $table->integer('journal_entry_id')->unsigned();
         $table->foreign('journal_entry_id')
           ->references('id')
           ->on('journal_entries');
 
-        $table->integer('question_id');
+        $table->integer('question_id')->unsigned();
         $table->foreign('question_id')
           ->references('id')
           ->on('questions');
 
-        $table->integer('answer_id');
+        $table->integer('answer_id')->unsigned();
         $table->foreign('answer_id')
           ->references('id')
           ->on('answers');
