@@ -21,4 +21,13 @@ Route::get('/', function() {
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::group(['namespace' => 'Api'], function() {
+  // Route::post('/users', 'SessionsController@create');
+  // Route::post('/users/{userId}', 'SessionsController@destroy');
+  //
+  Route::get('/questions', 'QuestionsController@index');
+  //
+  // Route::post('/responses', 'ResponsesController@create');
+});
+
+// Route::get('/home', 'HomeController@index');

@@ -1,7 +1,6 @@
 @extends('layouts.healthapp')
 
 @section('test-content')
-hello
 <div id="healthapp">
 
 </div>

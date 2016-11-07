@@ -21,7 +21,7 @@ const HealthApp = React.createClass({
 
 const _ensureLoggedIn = function(nextState, replace) {
   // if (!SessionStore.isUserLoggedIn()) {
-  if (false) {
+  if (true) {
     replace("/login");
   }
 };
