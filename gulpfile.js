@@ -1,5 +1,9 @@
 var elixir = require('laravel-elixir');
 
+// require('laravel-elixir-webpack-react');
+require('laravel-elixir-webpack');
+// require('laravel-elixir-vueify');
+
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -12,5 +16,7 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix.sass('healthapp.scss');
+    mix.webpack('healthapp.jsx');
+    // mix.browserify('healthapp.js');
 });
