@@ -13,7 +13,6 @@ const HealthApp = React.createClass({
   render() {
     return (
       <div>
-        This is a test
         {this.props.children}
       </div>
     );

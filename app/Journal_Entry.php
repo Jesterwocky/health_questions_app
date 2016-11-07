@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Journal_Entry extends Model
 {
 
-  proected $table = 'journal_entries';
+  protected $table = 'journal_entries';
 
   public function journal_entry() {
     return Journal_Entry::all();
