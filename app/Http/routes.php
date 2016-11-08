@@ -22,12 +22,14 @@ Route::get('/', function() {
 Route::auth();
 
 Route::group(['namespace' => 'Api'], function() {
-  // Route::post('/users', 'SessionsController@create');
-  // Route::post('/users/{userId}', 'SessionsController@destroy');
-  //
+  Route::post('/users', 'UsersController@create');
+
+  Route::post('/sessions', 'SessionsController@create');
+  Route::delete('/sessions', 'SessionsController@destroy');
+
   Route::get('/questions', 'QuestionsController@index');
-  //
-  // Route::post('/responses', 'ResponsesController@create');
+
+  Route::post('/responses', 'ResponsesController@create');
 });
 
 // Route::get('/home', 'HomeController@index');
