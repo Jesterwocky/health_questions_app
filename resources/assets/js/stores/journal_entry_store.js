@@ -46,3 +46,5 @@ JournalEntryStore.__onDispatch = function(payload) {
       break;
   }
 };
+
+module.exports = JournalEntryStore;

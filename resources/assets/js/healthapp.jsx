@@ -1,18 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+const React = require('react');
+const ReactDOM = require('react-dom');
 import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router';
 
 // const SessionStore = require('./stores/session_store.js');
 // const SessionActions = require('./actions/session_actions.js');
 
-import Login from './components/login/login.jsx';
-import Dashboard from './components/dashboard/dashboard.jsx';
-import HealthQuestions from './components/health_questions/health_questions.jsx';
+const Login = require('./components/login/login.jsx');
+const Dashboard = require('./components/dashboard/dashboard.jsx');
+const HealthQuestions = require('./components/health_questions/health_questions.jsx');
 
 const HealthApp = React.createClass({
   render() {
     return (
       <div>
+        Health App Loaded
         {this.props.children}
       </div>
     );
@@ -21,7 +22,7 @@ const HealthApp = React.createClass({
 
 const _ensureLoggedIn = function(nextState, replace) {
   // if (!SessionStore.isUserLoggedIn()) {
-  if (true) {
+  if (false) {
     replace("/login");
   }
 };
@@ -35,9 +36,7 @@ const routes = (
 );
 
 //need to get user
-console.log("File loaded");
 document.addEventListener('DOMContentLoaded', () => {
-  console.log("Dom content loaded");
   ReactDOM.render((
     <Router history={hashHistory}>
       {routes}

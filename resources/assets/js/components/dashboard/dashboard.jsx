@@ -7,10 +7,10 @@ module.exports = React.createClass({
 
   render() {
     return(
-      <div className={"dashboard-page"}>
+      <div className="dashboard-page">
         My Health Journal
-        <JournalEntriesIndex/>
-        <CurrentJournalEntry/>
+        // <JournalEntriesIndex/>
+        // <CurrentJournalEntry/>
       </div>
     );
   }
