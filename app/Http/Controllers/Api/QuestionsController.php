@@ -12,11 +12,7 @@ class QuestionsController extends Controller
 {
 
   public function index() {
-    // return "working";
     return Question::all()->load('answers');
-  }
-
-  public function show() {
   }
 
 }

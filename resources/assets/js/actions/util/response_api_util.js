@@ -1,10 +1,10 @@
 import $ from 'jquery';
 
 module.exports = {
-  questionsAndAnswers: function(success, error) {
+  postResponse: function(responseData, success, error) {
     $.ajax({
-      url: '/api/questions',
-      type: 'GET',
+      url: 'api/responses',
+      type: 'POST',
       dataType: 'json',
       success: success
     });

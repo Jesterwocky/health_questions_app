@@ -20,11 +20,10 @@ class Journal_Entry extends Model
   }
 
   public function responses() {
-    return $this->hasMany('App\Response');
+    return $this->hasMany('App\Response', 'journal_entry_id');
   }
 
   public function questions() {
     return $this->hasMany('App\Question');
   }
-
 }

@@ -4,7 +4,6 @@ const Constants = require('./constants.js');
 
 module.exports = {
   getQuestionsAndAnswers() {
-    console.log("Called getQuestionsAndAnswers");
     QuestionApiUtil.questionsAndAnswers(
       this.receiveQuestions
     );

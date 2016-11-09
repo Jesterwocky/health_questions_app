@@ -21,7 +21,7 @@ Route::get('/', function() {
 
 Route::auth();
 
-Route::group(['namespace' => 'Api'], function() {
+Route::group(['namespace' => 'Api', 'prefix' => 'api'], function() {
   Route::post('/users', 'UsersController@create');
 
   Route::post('/sessions', 'SessionsController@create');
@@ -30,6 +30,10 @@ Route::group(['namespace' => 'Api'], function() {
   Route::get('/questions', 'QuestionsController@index');
 
   Route::post('/responses', 'ResponsesController@create');
+
+  Route::post('/journal_entries', 'JournalEntriesController@create');
+  Route::get('/journal_entries', 'JournalEntriesController@index');
+  Route::get('/journal_entries/{entryId}', 'JournalEntriesController@show');
 });
 
 // Route::get('/home', 'HomeController@index');

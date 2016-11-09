@@ -33,8 +33,6 @@ QuestionStore.find = function(questionId) {
 };
 
 QuestionStore.__onDispatch = function(payload) {
-  console.log("Dispatcher reached store. Payload is:");
-  console.log(payload);
   switch (payload.actionType) {
     case Constants.QUESTIONS_RECEIVED:
       _resetQuestions(payload.questions);

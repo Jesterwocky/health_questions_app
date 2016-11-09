@@ -2,7 +2,9 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 
 const QuestionStore = require('../../stores/question_store.js');
+const JournalEntryStore = require('../../stores/journal_entry_store.js');
 const QuestionActions = require('../../actions/question_actions.js');
+const JournalEntryActions = require('../../actions/journal_entry_actions.js');
 const AnsweredQuestion = require('./answered_question.jsx');
 const CurrentQuestion = require('./current_question.jsx');
 
@@ -10,6 +12,7 @@ module.exports = React.createClass({
   getInitialState() {
     return({
       questions: QuestionStore.all(),
+      journalEntryId: null,
       currentQuestion: 0,
       answeredQuestions: []
     });
@@ -17,24 +20,22 @@ module.exports = React.createClass({
 
   componentDidMount() {
     this.questionListener = QuestionStore.addListener(this._handleQuestionChange);
+    this.journalEntryListener = JournalEntryStore.addListener(this._handleEntryCreation);
     QuestionActions.getQuestionsAndAnswers();
+    JournalEntryActions.createJournalEntry({});
   },
 
   _handleQuestionChange() {
-    console.log("State change!");
     this.setState({
       questions: QuestionStore.all()
     });
   },
 
-  answeredQuestions() {
-    return this.state.answeredQuestions.map((question, i) => {
-      return (
-        <AnsweredQuestion
-          key={i}
-          question={question}
-        />
-      );
+  _handleEntryCreation() {
+    let entry = JournalEntryStore.inProgressEntry();
+    this.setState({
+      journalEntryId: entry.id,
+      entryDate: entry.created_at
     });
   },
 
@@ -56,14 +57,30 @@ module.exports = React.createClass({
     }
   },
 
+  answeredQuestions() {
+    return this.state.answeredQuestions.map((question, i) => {
+      return (
+        <AnsweredQuestion
+          key={i}
+          question={question}
+        />
+      );
+    });
+  },
+
   currentQuestion() {
-    let questionText;
+    let questionText, questionId, answerList;
     if (this.state.questions.length >0) {
       questionText = this.state.questions[this.state.currentQuestion].question_text;
+      questionId = this.state.questions[this.state.currentQuestion].id;
+      answerList = this.state.questions[this.state.currentQuestion].answers;
     }
     return(
       <CurrentQuestion
+        journalEntryId={this.state.journalEntryId}
         questionText={questionText}
+        questionId={questionId}
+        answers={answerList}
         nextQuestion={this.nextQuestion}
         prevQuestion={this.prevQuestion}
       />
@@ -74,7 +91,9 @@ module.exports = React.createClass({
 
     return(
       <div className="health-questions-page">
-        This is the questions page.
+        <h1>Health Quiz</h1>
+        <p>Entry id {this.state.journalEntryId}</p>
+        <p>Created at {this.state.entryDate}</p>
         <div className="answered-health-questions">
           {this.answeredQuestions()}
         </div>

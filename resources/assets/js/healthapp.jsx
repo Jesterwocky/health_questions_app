@@ -13,7 +13,6 @@ const HealthApp = React.createClass({
   render() {
     return (
       <div>
-        Health App Loaded
         {this.props.children}
       </div>
     );
@@ -37,6 +36,7 @@ const routes = (
 
 //need to get user
 document.addEventListener('DOMContentLoaded', () => {
+
   ReactDOM.render((
     <Router history={hashHistory}>
       {routes}
