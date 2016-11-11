@@ -28,7 +28,7 @@ module.exports = React.createClass({
   },
 
   render() {
-    if (this.props.journalEntry !== null) {
+    if (this.props.journalEntry) {
       return (
         <div className="displayed-entry">
           <h2>{this.props.journalEntry.created_at}</h2>

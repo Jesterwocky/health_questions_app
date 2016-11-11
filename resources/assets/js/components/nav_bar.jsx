@@ -16,10 +16,6 @@ module.exports = React.createClass({
     this.sessionListener = SessionStore.addListener(this._onSessionChange);
   },
 
-  componentWillUpdate() {
-
-  },
-
   _onSessionChange() {
     if (SessionStore.loggedIn()) {
       hashHistory.push("health_questions");
@@ -28,10 +24,14 @@ module.exports = React.createClass({
     else {
       hashHistory.push("login");
     }
+
+    this.setState({
+      loggedIn: SessionStore.loggedIn(),
+      currentUser: SessionStore.currentUser()
+    });
   },
 
   userGreeting() {
-    debugger
     if (this.state.loggedIn && this.state.currentUser.name) {
       return `Welcome, ${this.state.currentUser.name}!`;
     }
@@ -42,6 +42,7 @@ module.exports = React.createClass({
 
   logOut() {
     SessionActions.logOut();
+    hashHistory.push("login");
   },
 
   render() {

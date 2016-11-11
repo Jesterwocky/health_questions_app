@@ -9,12 +9,16 @@ const ResponseActions = require('../../actions/response_actions.js');
 module.exports = React.createClass({
   getInitialState() {
     return ({
-      currentAnswerId: ResponseStore.questionResponseId(this.props.questionId)
+      currentAnswerId: null
     });
   },
 
   componentDidMount() {
     this.responseListener = ResponseStore.addListener(this._handleResponseChange);
+  },
+
+  componentWillUnmount() {
+    this.responseListener.remove();
   },
 
   _handleResponseChange() {
@@ -33,8 +37,6 @@ module.exports = React.createClass({
   },
 
   selectableAnswers() {
-    console.log(`Question: ${this.props.questionId}`);
-    console.log(`Answer: ${this.props.currentAnswerId}`);
     if (this.props.answers !== undefined) {
       return this.props.answers.map((answer, i) => {
 

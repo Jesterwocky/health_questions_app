@@ -11,6 +11,10 @@ function _addResponse(response) {
   _responses[parseInt(response.question_id)] = response;
 }
 
+function _clearResponses() {
+  _responses = {};
+}
+
 ResponseStore.all = function() {
   return Object.assign({}, _responses);
 };
@@ -47,6 +51,10 @@ ResponseStore.__onDispatch = function(payload) {
   switch (payload.actionType) {
     case Constants.NEW_RESPONSE:
       _addResponse(payload.response);
+      this.__emitChange();
+      break;
+    case Constants.CLEAR_RESPONSES:
+      _clearResponses();
       this.__emitChange();
       break;
   }

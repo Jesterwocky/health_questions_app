@@ -6,8 +6,6 @@ const QuestionStore = new Store(Dispatcher);
 
 let _questions = {};
 
-console.log("Question Store loaded.");
-
 function _resetQuestions(questions) {
   _questions = {};
 

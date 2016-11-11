@@ -6,18 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Journal_Entry;
 use App\User;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class JournalEntriesController extends Controller {
   public function index() {
-    // $userId = User::all()->first()->id;
-    $userId = Auth::id()
+    if (Auth::check()) {
+      # code...
+      $userId = Auth::id();
 
-    return Journal_Entry::withCount('Responses')
+      return Journal_Entry::withCount('Responses')
       ->with('responses.question', 'responses.answer')
+      ->where('user_id', $userId)
       ->whereRaw('responses_count > 0')
       ->get();
+    }
+
+    else {
+      return "user not logged in";
+    }
   }
 
   public function show(Request $request, $entryId) {
@@ -27,13 +35,9 @@ class JournalEntriesController extends Controller {
   }
 
   public function create() {
-    // $userId = User::all()->first()->id;
-    $userId = Auth::id()
-    // $userId = User::where('rememberToken', Session::get('sessionToken'))
     $entry = new Journal_Entry;
-    $entry->user_id = $userId;
+    $entry->user_id = Auth::id();
     $entry->save();
     return $entry->toArray();
-    // return Journal_Entry::create(['user_id' => $userId])->id;
   }
 }

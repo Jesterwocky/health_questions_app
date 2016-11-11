@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\User;
 
+use Auth;
+use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Validator;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class UsersController extends Controller {
@@ -33,6 +34,14 @@ class UsersController extends Controller {
         'email' => $credentials['email'],
         'password' => Hash::make($credentials['password']),
       ]);
+
+      if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+        return Auth::getUser();
+      }
+
+      else {
+        return "Login failed";
+      }
     }
 
     else {

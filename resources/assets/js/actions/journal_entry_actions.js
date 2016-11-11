@@ -23,6 +23,7 @@ module.exports = {
   },
 
   receiveNewEntryInfo(entry) {
+    debugger
     Dispatcher.dispatch({
       actionType: Constants.NEW_ENTRY_INFO_RECEIVED,
       journalEntry: entry

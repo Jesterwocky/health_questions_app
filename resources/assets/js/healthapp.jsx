@@ -22,16 +22,16 @@ const HealthApp = React.createClass({
 });
 
 function _ensureLoggedIn(nextState, replace) {
-  // if (!SessionStore.loggedIn()) {
-  //   replace("/login");
-  // }
+  if (!SessionStore.loggedIn()) {
+    replace("/login");
+  }
 }
 
 const routes = (
   <Route path="/" component={HealthApp}>
     <IndexRoute component={Dashboard} onEnter={_ensureLoggedIn}/>
     <Route path="login" component={Login}/>
-    <Route path="health_questions" component={HealthQuestions}/>
+    <Route path="health_questions" component={HealthQuestions} onEnter={_ensureLoggedIn}/>
   </Route>
 );
 

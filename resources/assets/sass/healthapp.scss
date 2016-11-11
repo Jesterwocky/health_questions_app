@@ -256,6 +256,10 @@ input[type="submit"], a {
           padding: 1em;
           margin-bottom: 0.2em;
           box-sizing: border-box;
+
+          &:hover {
+            cursor: pointer;
+          }
         }
 
         .selected-entry {

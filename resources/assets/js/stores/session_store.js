@@ -11,7 +11,7 @@ function _setCurrentUser(user) {
 }
 
 function _removeCurrentUser () {
-  _currentUser = [];
+  _currentUser = {};
 }
 
 SessionStore.loggedIn = function() {
@@ -23,7 +23,6 @@ SessionStore.currentUser = function() {
 };
 
 SessionStore.__onDispatch = function(payload) {
-  debugger
   switch (payload.actionType) {
     case Constants.LOGIN:
       _setCurrentUser(payload.user);

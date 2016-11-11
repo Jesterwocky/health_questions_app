@@ -15,5 +15,11 @@ module.exports = {
       actionType: Constants.NEW_RESPONSE,
       response: response
     });
+  },
+
+  clearResponses() {
+    Dispatcher.dispatch({
+      actionType: Constants.CLEAR_RESPONSES
+    });
   }
 };

@@ -4,7 +4,6 @@ module.exports = {
   newEntry: function(success, error) {
     $.ajax({
       url: '/api/journal_entries',
-      // data: { csrf_token: $('[name="csrf_token"]').attr('content') },
       type: 'POST',
       dataType: 'json',
       success: success

@@ -7,11 +7,6 @@ const JournalEntryStore = new Store(Dispatcher);
 let _inProgressEntry = [];
 
 let _journalEntries = {};
-// let _currentJournalEntry = [];
-
-// function _setCurrentJournalEntry(journalEntry) {
-//   _currentJournalEntry = journalEntry;
-// }
 
 function _resetJournalEntries(journalEntries) {
   _journalEntries = {};
@@ -24,10 +19,6 @@ function _resetJournalEntries(journalEntries) {
 function _setInProgressEntry(entry) {
   _inProgressEntry = entry;
 }
-
-// fullJournalEntryStore.currentEntry = function() {
-//   return _currentJournalEntry;
-// };
 
 JournalEntryStore.inProgressEntry = function() {
   return _inProgressEntry;

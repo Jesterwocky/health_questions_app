@@ -72,9 +72,9 @@
 	});
 	
 	function _ensureLoggedIn(nextState, replace) {
-	  // if (!SessionStore.loggedIn()) {
-	  //   replace("/login");
-	  // }
+	  if (!SessionStore.loggedIn()) {
+	    replace("/login");
+	  }
 	}
 	
 	var routes = React.createElement(
@@ -82,7 +82,7 @@
 	  { path: '/', component: HealthApp },
 	  React.createElement(_reactRouter.IndexRoute, { component: Dashboard, onEnter: _ensureLoggedIn }),
 	  React.createElement(_reactRouter.Route, { path: 'login', component: Login }),
-	  React.createElement(_reactRouter.Route, { path: 'health_questions', component: HealthQuestions })
+	  React.createElement(_reactRouter.Route, { path: 'health_questions', component: HealthQuestions, onEnter: _ensureLoggedIn })
 	);
 	
 	function retrieveUser() {}
@@ -26477,8 +26477,10 @@
 	  componentDidMount: function componentDidMount() {
 	    this.sessionListener = SessionStore.addListener(this._onSessionChange);
 	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.sessionListener.remove();
+	  },
 	  _onSessionChange: function _onSessionChange() {
-	    debugger;
 	    if (SessionStore.loggedIn()) {
 	      hashHistory.push("health_questions");
 	    }
@@ -26495,8 +26497,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'login-boxes' },
-	        React.createElement(ExistingAccount, null),
-	        React.createElement(NewAccount, null)
+	        React.createElement(ExistingAccount, null)
 	      )
 	    );
 	  }
@@ -26670,6 +26671,7 @@
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	  getInitialState: function getInitialState() {
+	    debugger;
 	    return {
 	      journalEntries: JournalEntryStore.all(),
 	      currentEntryId: null,
@@ -26679,6 +26681,9 @@
 	  componentDidMount: function componentDidMount() {
 	    this.journalEntryListener = JournalEntryStore.addListener(this._handleEntriesChange);
 	    JournalEntryActions.getJournalEntries();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.journalEntryListener.remove();
 	  },
 	  _handleEntriesChange: function _handleEntriesChange() {
 	    var entries = JournalEntryStore.all().reverse();
@@ -26770,7 +26775,7 @@
 	    }
 	  },
 	  render: function render() {
-	    if (this.props.journalEntry !== null) {
+	    if (this.props.journalEntry) {
 	      return React.createElement(
 	        'div',
 	        { className: 'displayed-entry' },
@@ -26810,6 +26815,7 @@
 	var AnsweredQuestion = __webpack_require__(235);
 	var CurrentQuestion = __webpack_require__(236);
 	var ResponseStore = __webpack_require__(259);
+	var ResponseActions = __webpack_require__(263);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -26826,6 +26832,11 @@
 	    this.journalEntryListener = JournalEntryStore.addListener(this._handleEntryCreation);
 	    QuestionActions.getQuestionsAndAnswers();
 	    JournalEntryActions.createJournalEntry({});
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.questionListener.remove();
+	    this.journalEntryListener.remove();
+	    ResponseActions.clearResponses();
 	  },
 	  _handleQuestionChange: function _handleQuestionChange() {
 	    this.setState({
@@ -26847,16 +26858,13 @@
 	      if (!this.state.answeredQIds.includes(this.state.currentQuestionInd)) {
 	        this.state.answeredQIds.push(this.state.currentQuestionInd);
 	      }
-	      // let currentQuestionId = this.state.questions[this.state.currentQuestionInd].id;
-	      // if (!this.state.answeredQIds.includes(currentQuestionId)){
-	      //      this.state.answeredQIds.push(this.state.currentQuestionInd);
-	      // }
-	      // this.state.answeredQIds[this.state.currentQuestionInd] = true;
+	
 	      this.setState({
 	        currentQuestionInd: nextQuestionInd
 	      });
 	    }
 	  },
+	  updateAnsweredQuestions: function updateAnsweredQuestions(questionId) {},
 	  prevQuestion: function prevQuestion(event) {
 	    event.preventDefault();
 	    if (this.state.currentQuestionInd - 1 >= 0) {
@@ -26866,39 +26874,34 @@
 	    }
 	  },
 	  answeredQuestions: function answeredQuestions() {
-	    var _this = this;
+	    // let questions;
+	    //
+	    // if (this.state.answeredQIds.length > 0) {
+	    //
+	    //   let answeredQuestions = this.state.answeredQIds.map((ind) => {
+	    //     return this.state.questions[ind];
+	    //   });
+	    //
+	    //   questions = answeredQuestions.map((question, i) => {
+	    //     let answer = ResponseStore.questionResponseText(question.id);
+	    //
+	    //     return (
+	    //       <AnsweredQuestion
+	    //         key={i}
+	    //         question={question.question_text}
+	    //         answer={answer}
+	    //       />
+	    //     );
+	    //   });
+	    // }
+	    // return (
+	    //   <div className="group answered-questions-sidebar">
+	    //     <h3>My Answers</h3>
+	    //     {questions}
+	    //   </div>
+	    // );
 	
-	    var questions = void 0;
-	
-	    if (this.state.answeredQIds.length > 0) {
-	      // let answeredQuestions = this.state.answeredQIds.map((id) => {
-	      //   return (QuestionStore.find(id));
-	      // });
-	
-	      var answeredQuestions = this.state.answeredQIds.map(function (ind) {
-	        return _this.state.questions[ind];
-	      });
-	
-	      questions = answeredQuestions.map(function (question, i) {
-	        var answer = ResponseStore.questionResponseText(question.id);
-	
-	        return React.createElement(AnsweredQuestion, {
-	          key: i,
-	          question: question.question_text,
-	          answer: answer
-	        });
-	      });
-	    }
-	    return React.createElement(
-	      'div',
-	      { className: 'group answered-questions-sidebar' },
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Seen Questions'
-	      ),
-	      questions
-	    );
+	    return React.createElement('div', { className: 'group answered-questions-sidebar' });
 	  },
 	  currentQuestion: function currentQuestion() {
 	    var questionText = void 0,
@@ -26940,18 +26943,6 @@
 	        { className: 'question-section' },
 	        this.answeredQuestions(),
 	        this.currentQuestion()
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        'Entry id ',
-	        this.state.journalEntryId
-	      ),
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Created at ',
-	        this.state.entryDate
 	      )
 	    );
 	  }
@@ -26973,21 +26964,15 @@
 	      'div',
 	      null,
 	      React.createElement(
-	        'h3',
+	        'p',
 	        null,
-	        'My Answers'
+	        this.props.question
 	      ),
 	      React.createElement(
 	        'p',
 	        null,
-	        'Q: ',
-	        this.props.question_text
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        'A: ',
-	        this.props.answer_text
+	        'I answered: ',
+	        this.props.answer
 	      )
 	    );
 	  }
@@ -27011,11 +26996,14 @@
 	  displayName: 'exports',
 	  getInitialState: function getInitialState() {
 	    return {
-	      currentAnswerId: ResponseStore.questionResponseId(this.props.questionId)
+	      currentAnswerId: null
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.responseListener = ResponseStore.addListener(this._handleResponseChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.responseListener.remove();
 	  },
 	  _handleResponseChange: function _handleResponseChange() {
 	    var answerId = ResponseStore.questionResponseId(this.props.questionId);
@@ -27033,8 +27021,6 @@
 	  selectableAnswers: function selectableAnswers() {
 	    var _this = this;
 	
-	    console.log('Question: ' + this.props.questionId);
-	    console.log('Answer: ' + this.props.currentAnswerId);
 	    if (this.props.answers !== undefined) {
 	      return this.props.answers.map(function (answer, i) {
 	
@@ -27123,8 +27109,6 @@
 	var QuestionStore = new Store(Dispatcher);
 	
 	var _questions = {};
-	
-	console.log("Question Store loaded.");
 	
 	function _resetQuestions(questions) {
 	  _questions = {};
@@ -28754,7 +28738,9 @@
 	
 	  NEW_RESPONSE: "NEW_RESPONSE",
 	
-	  USER_RECEIVED: "USER_RECEIVED"
+	  USER_RECEIVED: "USER_RECEIVED",
+	
+	  CLEAR_RESPONSES: "CLEAR_RESPONSES"
 	
 	};
 
@@ -39088,6 +39074,10 @@
 	  _responses[parseInt(response.question_id)] = response;
 	}
 	
+	function _clearResponses() {
+	  _responses = {};
+	}
+	
 	ResponseStore.all = function () {
 	  return Object.assign({}, _responses);
 	};
@@ -39143,6 +39133,10 @@
 	      _addResponse(payload.response);
 	      this.__emitChange();
 	      break;
+	    case Constants.CLEAR_RESPONSES:
+	      _clearResponses();
+	      this.__emitChange();
+	      break;
 	  }
 	};
 	
@@ -39163,11 +39157,6 @@
 	var _inProgressEntry = [];
 	
 	var _journalEntries = {};
-	// let _currentJournalEntry = [];
-	
-	// function _setCurrentJournalEntry(journalEntry) {
-	//   _currentJournalEntry = journalEntry;
-	// }
 	
 	function _resetJournalEntries(journalEntries) {
 	  _journalEntries = {};
@@ -39180,10 +39169,6 @@
 	function _setInProgressEntry(entry) {
 	  _inProgressEntry = entry;
 	}
-	
-	// fullJournalEntryStore.currentEntry = function() {
-	//   return _currentJournalEntry;
-	// };
 	
 	JournalEntryStore.inProgressEntry = function () {
 	  return _inProgressEntry;
@@ -39249,6 +39234,7 @@
 	    JournalEntryApiUtil.getEntry(entryId, this.receiveJournalEntry);
 	  },
 	  receiveNewEntryInfo: function receiveNewEntryInfo(entry) {
+	    debugger;
 	    Dispatcher.dispatch({
 	      actionType: Constants.NEW_ENTRY_INFO_RECEIVED,
 	      journalEntry: entry
@@ -39284,7 +39270,6 @@
 	  newEntry: function newEntry(success, error) {
 	    _jquery2.default.ajax({
 	      url: '/api/journal_entries',
-	      // data: { csrf_token: $('[name="csrf_token"]').attr('content') },
 	      type: 'POST',
 	      dataType: 'json',
 	      success: success
@@ -39328,6 +39313,11 @@
 	    Dispatcher.dispatch({
 	      actionType: Constants.NEW_RESPONSE,
 	      response: response
+	    });
+	  },
+	  clearResponses: function clearResponses() {
+	    Dispatcher.dispatch({
+	      actionType: Constants.CLEAR_RESPONSES
 	    });
 	  }
 	};
@@ -39416,7 +39406,6 @@
 	  displayName: 'exports',
 	  selectEntry: function selectEntry() {
 	    this.props.selectEntry(this.props.entryId);
-	    console.log("Click in index item");
 	  },
 	  render: function render() {
 	    var classes = "journal-entry-item";
@@ -39491,14 +39480,12 @@
 	    SessionApiUtil.logOut(this.removeCurrentUser);
 	  },
 	  receiveCurrentUser: function receiveCurrentUser(user) {
-	    debugger;
 	    Dispatcher.dispatch({
 	      actionType: Constants.LOGIN,
 	      user: user
 	    });
 	  },
 	  removeCurrentUser: function removeCurrentUser() {
-	    debugger;
 	    Dispatcher.dispatch({
 	      actionType: Constants.LOGOUT
 	    });
@@ -39565,7 +39552,7 @@
 	}
 	
 	function _removeCurrentUser() {
-	  _currentUser = [];
+	  _currentUser = {};
 	}
 	
 	SessionStore.loggedIn = function () {
@@ -39577,7 +39564,6 @@
 	};
 	
 	SessionStore.__onDispatch = function (payload) {
-	  debugger;
 	  switch (payload.actionType) {
 	    case Constants.LOGIN:
 	      _setCurrentUser(payload.user);
@@ -39615,16 +39601,19 @@
 	  componentDidMount: function componentDidMount() {
 	    this.sessionListener = SessionStore.addListener(this._onSessionChange);
 	  },
-	  componentWillUpdate: function componentWillUpdate() {},
 	  _onSessionChange: function _onSessionChange() {
 	    if (SessionStore.loggedIn()) {
 	      hashHistory.push("health_questions");
 	    } else {
 	      hashHistory.push("login");
 	    }
+	
+	    this.setState({
+	      loggedIn: SessionStore.loggedIn(),
+	      currentUser: SessionStore.currentUser()
+	    });
 	  },
 	  userGreeting: function userGreeting() {
-	    debugger;
 	    if (this.state.loggedIn && this.state.currentUser.name) {
 	      return 'Welcome, ' + this.state.currentUser.name + '!';
 	    } else {
@@ -39633,6 +39622,7 @@
 	  },
 	  logOut: function logOut() {
 	    SessionActions.logOut();
+	    hashHistory.push("login");
 	  },
 	  render: function render() {
 	    return React.createElement(

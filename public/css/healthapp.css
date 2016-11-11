@@ -212,8 +212,11 @@ input[type="submit"], a {
         padding: 1em;
         margin-bottom: 0.2em;
         box-sizing: border-box; }
+        .dashboard-page .journal-section .journal-entry-sidebar .journal-entries-list .journal-entry-item:hover {
+          cursor: pointer; }
       .dashboard-page .journal-section .journal-entry-sidebar .journal-entries-list .selected-entry {
-        background: #3591e6; }
+        background: #3591e6;
+        color: white; }
   .dashboard-page .journal-section .displayed-entry {
     -ms-flex: 3;
     flex: 3; }

@@ -11,6 +11,7 @@ const NavBar = require('../nav_bar.jsx');
 
 module.exports = React.createClass({
   getInitialState() {
+    debugger
     return ({
       journalEntries: JournalEntryStore.all(),
       currentEntryId: null,
@@ -22,6 +23,10 @@ module.exports = React.createClass({
   componentDidMount() {
     this.journalEntryListener = JournalEntryStore.addListener(this._handleEntriesChange);
     JournalEntryActions.getJournalEntries();
+  },
+
+  componentWillUnmount() {
+    this.journalEntryListener.remove();
   },
 
   _handleEntriesChange() {

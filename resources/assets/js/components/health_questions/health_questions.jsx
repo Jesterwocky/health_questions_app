@@ -8,6 +8,7 @@ const JournalEntryActions = require('../../actions/journal_entry_actions.js');
 const AnsweredQuestion = require('./answered_question.jsx');
 const CurrentQuestion = require('./current_question.jsx');
 const ResponseStore = require('../../stores/response_store.js');
+const ResponseActions = require('../../actions/response_actions.js');
 
 module.exports = React.createClass({
   getInitialState() {
@@ -24,6 +25,12 @@ module.exports = React.createClass({
     this.journalEntryListener = JournalEntryStore.addListener(this._handleEntryCreation);
     QuestionActions.getQuestionsAndAnswers();
     JournalEntryActions.createJournalEntry({});
+  },
+
+  componentWillUnmount() {
+    this.questionListener.remove();
+    this.journalEntryListener.remove();
+    ResponseActions.clearResponses();
   },
 
   _handleQuestionChange() {
@@ -48,15 +55,15 @@ module.exports = React.createClass({
       if (!this.state.answeredQIds.includes(this.state.currentQuestionInd)) {
         this.state.answeredQIds.push(this.state.currentQuestionInd);
       }
-      // let currentQuestionId = this.state.questions[this.state.currentQuestionInd].id;
-      // if (!this.state.answeredQIds.includes(currentQuestionId)){
-      //      this.state.answeredQIds.push(this.state.currentQuestionInd);
-      // }
-      // this.state.answeredQIds[this.state.currentQuestionInd] = true;
+
       this.setState({
         currentQuestionInd: nextQuestionInd,
       });
     }
+  },
+
+  updateAnsweredQuestions(questionId) {
+
   },
 
   prevQuestion(event) {
@@ -69,35 +76,34 @@ module.exports = React.createClass({
   },
 
   answeredQuestions() {
-    let questions;
+    // let questions;
+    //
+    // if (this.state.answeredQIds.length > 0) {
+    //
+    //   let answeredQuestions = this.state.answeredQIds.map((ind) => {
+    //     return this.state.questions[ind];
+    //   });
+    //
+    //   questions = answeredQuestions.map((question, i) => {
+    //     let answer = ResponseStore.questionResponseText(question.id);
+    //
+    //     return (
+    //       <AnsweredQuestion
+    //         key={i}
+    //         question={question.question_text}
+    //         answer={answer}
+    //       />
+    //     );
+    //   });
+    // }
+    // return (
+    //   <div className="group answered-questions-sidebar">
+    //     <h3>My Answers</h3>
+    //     {questions}
+    //   </div>
+    // );
 
-    if (this.state.answeredQIds.length > 0) {
-      // let answeredQuestions = this.state.answeredQIds.map((id) => {
-      //   return (QuestionStore.find(id));
-      // });
-
-      let answeredQuestions = this.state.answeredQIds.map((ind) => {
-        return this.state.questions[ind];
-      });
-
-      questions = answeredQuestions.map((question, i) => {
-        let answer = ResponseStore.questionResponseText(question.id);
-
-        return (
-          <AnsweredQuestion
-            key={i}
-            question={question.question_text}
-            answer={answer}
-          />
-        );
-      });
-    }
-    return (
-      <div className="group answered-questions-sidebar">
-        <h3>Seen Questions</h3>
-        {questions}
-      </div>
-    );
+    return <div className="group answered-questions-sidebar"></div>;
   },
 
   currentQuestion() {
@@ -133,8 +139,6 @@ module.exports = React.createClass({
           {this.answeredQuestions()}
           {this.currentQuestion()}
         </div>
-        <p>Entry id {this.state.journalEntryId}</p>
-        <h3>Created at {this.state.entryDate}</h3>
       </div>
     );
   }

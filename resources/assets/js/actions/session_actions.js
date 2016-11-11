@@ -25,7 +25,6 @@ module.exports = {
   },
 
   receiveCurrentUser(user) {
-    debugger
     Dispatcher.dispatch({
       actionType: Constants.LOGIN,
       user: user
@@ -33,7 +32,6 @@ module.exports = {
   },
 
   removeCurrentUser() {
-    debugger
     Dispatcher.dispatch({
       actionType: Constants.LOGOUT
     });

@@ -6,7 +6,6 @@ module.exports = React.createClass({
 
   selectEntry() {
     this.props.selectEntry(this.props.entryId);
-    console.log("Click in index item");
   },
 
   render() {
