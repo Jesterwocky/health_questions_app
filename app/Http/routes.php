@@ -19,7 +19,7 @@ Route::get('/', function() {
   return view('static_page');
 });
 
-Route::auth();
+// Route::auth();
 
 Route::group(['namespace' => 'Api', 'prefix' => 'api'], function() {
   Route::post('/users', 'UsersController@create');

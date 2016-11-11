@@ -1,7 +1,9 @@
+import $ from 'jquery';
+
 module.exports = {
   signUp(userData, success, error) {
     $.ajax({
-      url: "/api/register",
+      url: "/api/users",
       type: "POST",
       data: userData,
       dataType: "json",
@@ -9,9 +11,9 @@ module.exports = {
     });
   },
 
-  login(userData, success, error) {
+  logIn(userData, success, error) {
     $.ajax({
-      url: "/api/login",
+      url: "/api/sessions",
       type: "POST",
       data: userData,
       dataType: "json",
@@ -19,9 +21,9 @@ module.exports = {
     });
   },
 
-  logout(success, error) {
+  logOut(success, error) {
     $.ajax({
-      url: "api/session",
+      url: "/api/sessions",
       type: "DELETE",
       dataType: "json",
       success: success

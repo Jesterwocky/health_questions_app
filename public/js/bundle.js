@@ -72,9 +72,6 @@
 	});
 	
 	function _ensureLoggedIn(nextState, replace) {
-	  if (false) {
-	    replace("/login");
-	  }
 	  // if (!SessionStore.loggedIn()) {
 	  //   replace("/login");
 	  // }
@@ -26470,11 +26467,22 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
 	
+	var SessionStore = __webpack_require__(271);
+	var hashHistory = __webpack_require__(172).hashHistory;
 	var ExistingAccount = __webpack_require__(229);
 	var NewAccount = __webpack_require__(230);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
+	  componentDidMount: function componentDidMount() {
+	    this.sessionListener = SessionStore.addListener(this._onSessionChange);
+	  },
+	  _onSessionChange: function _onSessionChange() {
+	    debugger;
+	    if (SessionStore.loggedIn()) {
+	      hashHistory.push("health_questions");
+	    }
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
@@ -26502,7 +26510,10 @@
 	
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
+	
 	var SessionActions = __webpack_require__(269);
+	var SessionStore = __webpack_require__(271);
+	var hashHistory = __webpack_require__(172).hashHistory;
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -26567,6 +26578,7 @@
 	
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
+	var SessionActions = __webpack_require__(269);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -26596,6 +26608,11 @@
 	  },
 	  createAccount: function createAccount(event) {
 	    event.preventDefault();
+	    SessionActions.signUp({
+	      name: this.state.name,
+	      email: this.state.email,
+	      password: this.state.password
+	    });
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -26641,11 +26658,14 @@
 	
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
+	
 	var JournalEntryStore = __webpack_require__(260);
 	var FullJournalEntryStore = __webpack_require__(268);
 	var JournalEntryActions = __webpack_require__(261);
+	
 	var JournalEntriesIndex = __webpack_require__(266);
 	var CurrentJournalEntry = __webpack_require__(233);
+	var NavBar = __webpack_require__(272);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -26658,7 +26678,6 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.journalEntryListener = JournalEntryStore.addListener(this._handleEntriesChange);
-	    // this.displayEntryListener = FullJournalEntryStore.addListener(this._handleDisplayChange);
 	    JournalEntryActions.getJournalEntries();
 	  },
 	  _handleEntriesChange: function _handleEntriesChange() {
@@ -26673,7 +26692,6 @@
 	    });
 	  },
 	  selectEntry: function selectEntry(entryId) {
-	    console.log("Click in dashboard");
 	    var currentEntry = JournalEntryStore.find(entryId);
 	    this.setState({
 	      currentEntryId: entryId,
@@ -26693,6 +26711,7 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'dashboard-page' },
+	      React.createElement(NavBar, null),
 	      React.createElement(
 	        'h1',
 	        null,
@@ -26954,15 +26973,21 @@
 	      'div',
 	      null,
 	      React.createElement(
-	        'p',
+	        'h3',
 	        null,
-	        'Q: ',
-	        this.props.question.question_text
+	        'My Answers'
 	      ),
 	      React.createElement(
 	        'p',
 	        null,
-	        'A:'
+	        'Q: ',
+	        this.props.question_text
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        'A: ',
+	        this.props.answer_text
 	      )
 	    );
 	  }
@@ -28718,6 +28743,9 @@
 	"use strict";
 	
 	module.exports = {
+	  LOGIN: "LOGIN",
+	  LOGOUT: "LOGOUT",
+	
 	  QUESTIONS_RECEIVED: "QUESTIONS_RECEIVED",
 	
 	  NEW_ENTRY_INFO_RECEIVED: "NEW_ENTRY_INFO_RECEIVED",
@@ -28727,6 +28755,7 @@
 	  NEW_RESPONSE: "NEW_RESPONSE",
 	
 	  USER_RECEIVED: "USER_RECEIVED"
+	
 	};
 
 /***/ },
@@ -39251,35 +39280,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// var getXsrfToken = function() {
-	//     var cookies = document.cookie.split(';');
-	//     var token = '';
-	//
-	//     for (var i = 0; i < cookies.length; i++) {
-	//         var cookie = cookies[i].split('=');
-	//         if(cookie[0] == 'XSRF-TOKEN') {
-	//             token = decodeURIComponent(cookie[1]);
-	//         }
-	//     }
-	//
-	//     return token;
-	// };
-	
-	// $.ajaxSetup({
-	//     headers: {
-	//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	//     }
-	// });
-	
 	module.exports = {
 	  newEntry: function newEntry(success, error) {
 	    _jquery2.default.ajax({
 	      url: '/api/journal_entries',
-	      // headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-	      // headers: {'X-CSRF-Token': $('input[name="_token"]').val()},
-	      // headers: {'X-XSRF-TOKEN': getXsrfToken()},
-	      // headers: {'X-XSRF-TOKEN': _token},
-	      data: { csrf_token: (0, _jquery2.default)('[name="csrf_token"]').attr('content') },
+	      // data: { csrf_token: $('[name="csrf_token"]').attr('content') },
 	      type: 'POST',
 	      dataType: 'json',
 	      success: success
@@ -39480,16 +39485,20 @@
 	    SessionApiUtil.logIn(userData, this.receiveCurrentUser);
 	  },
 	  signUp: function signUp(userData) {
-	    SessionApiUtil.createUser(userData, this.receiveCurrentUser);
+	    SessionApiUtil.signUp(userData, this.receiveCurrentUser);
 	  },
-	  logOut: function logOut() {},
+	  logOut: function logOut() {
+	    SessionApiUtil.logOut(this.removeCurrentUser);
+	  },
 	  receiveCurrentUser: function receiveCurrentUser(user) {
+	    debugger;
 	    Dispatcher.dispatch({
 	      actionType: Constants.LOGIN,
 	      user: user
 	    });
 	  },
 	  removeCurrentUser: function removeCurrentUser() {
+	    debugger;
 	    Dispatcher.dispatch({
 	      actionType: Constants.LOGOUT
 	    });
@@ -39498,32 +39507,38 @@
 
 /***/ },
 /* 270 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
+	var _jquery = __webpack_require__(257);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	module.exports = {
 	  signUp: function signUp(userData, success, error) {
-	    $.ajax({
-	      url: "/api/register",
+	    _jquery2.default.ajax({
+	      url: "/api/users",
 	      type: "POST",
 	      data: userData,
 	      dataType: "json",
 	      success: success
 	    });
 	  },
-	  login: function login(userData, success, error) {
-	    $.ajax({
-	      url: "/api/login",
+	  logIn: function logIn(userData, success, error) {
+	    _jquery2.default.ajax({
+	      url: "/api/sessions",
 	      type: "POST",
 	      data: userData,
 	      dataType: "json",
 	      success: success
 	    });
 	  },
-	  logout: function logout(success, error) {
-	    $.ajax({
-	      url: "api/session",
+	  logOut: function logOut(success, error) {
+	    _jquery2.default.ajax({
+	      url: "/api/sessions",
 	      type: "DELETE",
 	      dataType: "json",
 	      success: success
@@ -39554,7 +39569,7 @@
 	}
 	
 	SessionStore.loggedIn = function () {
-	  return _currentUser.id === undefined;
+	  return _currentUser.id !== undefined;
 	};
 	
 	SessionStore.currentUser = function () {
@@ -39562,6 +39577,7 @@
 	};
 	
 	SessionStore.__onDispatch = function (payload) {
+	  debugger;
 	  switch (payload.actionType) {
 	    case Constants.LOGIN:
 	      _setCurrentUser(payload.user);
@@ -39575,6 +39591,74 @@
 	};
 	
 	module.exports = SessionStore;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(34);
+	var SessionActions = __webpack_require__(269);
+	var SessionStore = __webpack_require__(271);
+	var hashHistory = __webpack_require__(172).hashHistory;
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	  getInitialState: function getInitialState() {
+	    return {
+	      loggedIn: SessionStore.loggedIn(),
+	      currentUser: SessionStore.currentUser()
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.sessionListener = SessionStore.addListener(this._onSessionChange);
+	  },
+	  componentWillUpdate: function componentWillUpdate() {},
+	  _onSessionChange: function _onSessionChange() {
+	    if (SessionStore.loggedIn()) {
+	      hashHistory.push("health_questions");
+	    } else {
+	      hashHistory.push("login");
+	    }
+	  },
+	  userGreeting: function userGreeting() {
+	    debugger;
+	    if (this.state.loggedIn && this.state.currentUser.name) {
+	      return 'Welcome, ' + this.state.currentUser.name + '!';
+	    } else {
+	      return 'Welcome!';
+	    }
+	  },
+	  logOut: function logOut() {
+	    SessionActions.logOut();
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'nav-bar group' },
+	      React.createElement(
+	        'div',
+	        { className: 'nav-bar-content group' },
+	        React.createElement(
+	          'div',
+	          { className: 'user-greeting' },
+	          this.userGreeting()
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'logout-button-section' },
+	          React.createElement(
+	            'button',
+	            { onClick: this.logOut, className: 'logout-button' },
+	            'Log out'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
 
 /***/ }
 /******/ ]);

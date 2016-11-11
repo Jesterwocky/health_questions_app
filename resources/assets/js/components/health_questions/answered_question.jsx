@@ -5,11 +5,12 @@ module.exports = React.createClass({
   render() {
     return(
       <div>
+        <h3>My Answers</h3>
         <p>
-          Q: {this.props.question.question_text}
+          Q: {this.props.question_text}
         </p>
         <p>
-          A:
+          A: {this.props.answer_text}
         </p>
       </div>
     );

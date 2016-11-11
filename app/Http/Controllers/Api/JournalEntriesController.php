@@ -11,7 +11,8 @@ use App\Http\Requests;
 
 class JournalEntriesController extends Controller {
   public function index() {
-    $userId = User::all()->first()->id;
+    // $userId = User::all()->first()->id;
+    $userId = Auth::id()
 
     return Journal_Entry::withCount('Responses')
       ->with('responses.question', 'responses.answer')
@@ -26,7 +27,8 @@ class JournalEntriesController extends Controller {
   }
 
   public function create() {
-    $userId = User::all()->first()->id;
+    // $userId = User::all()->first()->id;
+    $userId = Auth::id()
     // $userId = User::where('rememberToken', Session::get('sessionToken'))
     $entry = new Journal_Entry;
     $entry->user_id = $userId;

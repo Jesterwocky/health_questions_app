@@ -1,6 +1,9 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
+
 const SessionActions = require('../../actions/session_actions.js');
+const SessionStore = require('../../stores/session_store.js');
+const hashHistory = require('react-router').hashHistory;
 
 module.exports = React.createClass({
     getInitialState() {
@@ -44,7 +47,6 @@ module.exports = React.createClass({
 
             <input type="submit" value="Sign In" className="login-button"/>
           </form>
-
         </div>
       );
     }

@@ -1,5 +1,6 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
+const SessionActions = require('../../actions/session_actions.js');
 
 module.exports = React.createClass({
   // getInitialState() {
@@ -30,7 +31,11 @@ module.exports = React.createClass({
 
   createAccount(event) {
     event.preventDefault();
-
+    SessionActions.signUp({
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password
+    });
   },
 
   render() {
@@ -50,8 +55,6 @@ module.exports = React.createClass({
 
           <input type="submit" value="Sign Up" className="login-button"/>
         </form>
-
-
       </div>
     );
   }
