@@ -19,3 +19,7 @@ Currently, signup is disabled pending resolution of errors. You can sign in as o
 * moo@example.com
 
 The password for both is password123.
+
+# Notes
+
+The app presents a health quiz each time you log in.
