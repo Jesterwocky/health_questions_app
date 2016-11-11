@@ -8,23 +8,38 @@ const ResponseStore = new Store(Dispatcher);
 let _responses = {};
 
 function _addResponse(response) {
-  _responses[response.question_id] = response;
+  _responses[parseInt(response.question_id)] = response;
 }
 
 ResponseStore.all = function() {
-  let responses;
-  Object.assign(responses, _responses);
-
-  return responses;
+  return Object.assign({}, _responses);
 };
 
-ResponseStore.questionResponse = function(questionId) {
+ResponseStore.questionResponseId = function(questionId) {
   if (Object.keys(_responses).length > 0 ){
-    return _responses[questionId].id;
+    return _responses[questionId].answer_id;
   }
 
   else {
     return null;
+  }
+};
+
+ResponseStore.answerSelected = function(answerId) {
+  for (let qId of Object.keys(_responses)) {
+    if (parseInt(_responses[qId].answer_id) === answerId) return true;
+  }
+
+  return false;
+};
+
+ResponseStore.questionResponseText = function(questionId) {
+  if (Object.keys(_responses).includes(questionId)){
+    return _responses[questionId].answer_text;
+  }
+
+  else {
+    return "[You haven't answered this question]";
   }
 };
 

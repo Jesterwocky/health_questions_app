@@ -1,0 +1,263 @@
+html {
+  height: 100%; }
+
+html, body, header, nav, h1, a,
+ul, li, strong, main, button, i,
+section, img, div, h2, p, form,
+fieldset, label, input, textarea,
+span, article, footer, time, small {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: inherit;
+  vertical-align: inherit;
+  box-sizing: inherit;
+  background: transparent;
+  font-family: sans-serif;
+  font-size: inherit; }
+
+ul {
+  list-style: none; }
+
+img {
+  display: block;
+  width: 100%;
+  height: auto; }
+
+input[type="password"],
+input[type="email"],
+input[type="text"],
+input[type="submit"],
+textarea,
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-sizing: border-box; }
+
+button,
+input[type="submit"], a {
+  cursor: pointer; }
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both; }
+
+.login-page {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto; }
+  .login-page h1 {
+    font-size: 3.5em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.3em;
+    margin-top: 0.2em; }
+  .login-page h2 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.2em;
+    text-align: center; }
+  .login-page p {
+    margin-bottom: 0.1em;
+    text-align: center; }
+  .login-page .login-boxes {
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    width: 100%;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -ms-flex-line-pack: distribute;
+    align-content: space-around; }
+    .login-page .login-boxes .returning-user-sign-in, .login-page .login-boxes .new-user-sign-up {
+      background: #dff1f5;
+      min-width: 10em;
+      max-width: 20em;
+      -ms-flex: 1;
+      flex: 1;
+      border-radius: 1.5px;
+      padding: 2em; }
+    .login-page .login-boxes .returning-user-sign-in {
+      margin-right: 1%;
+      background: #dff1f5; }
+    .login-page .login-boxes .new-user-sign-up {
+      margin-left: 1%; }
+    .login-page .login-boxes form {
+      text-align: center;
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto; }
+      .login-page .login-boxes form label {
+        font-size: 0.9em;
+        margin-top: 0.8em; }
+      .login-page .login-boxes form .text-field {
+        text-align: left;
+        color: #3591e6;
+        font-size: 1.6em;
+        background: white;
+        padding: 0.3em;
+        width: 100%;
+        border: 2px solid #e8ecf9;
+        border-radius: 2px;
+        box-sizing: border-box;
+        margin-top: 0.3em;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto; }
+      .login-page .login-boxes form .login-button {
+        color: white;
+        font-weight: bold;
+        background: #3591e6;
+        padding: 0.7em;
+        margin-top: 1em;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto; }
+
+.dashboard-page h1 {
+  font-size: 3.5em;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.3em;
+  margin-top: 0.2em; }
+
+.dashboard-page h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #3591e6; }
+
+.dashboard-page h3 {
+  font-size: 1em;
+  margin: 0; }
+
+.dashboard-page h4 {
+  margin-bottom: 1.6em;
+  margin-top: 0.1em;
+  color: #3591e6; }
+
+.dashboard-page .journal-section {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  width: 100%; }
+  .dashboard-page .journal-section .displayed-entry {
+    width: 80%; }
+    .dashboard-page .journal-section .displayed-entry .q-and-a-set {
+      margin-top: 1.2em; }
+      .dashboard-page .journal-section .displayed-entry .q-and-a-set .question {
+        font-weight: bold; }
+      .dashboard-page .journal-section .displayed-entry .q-and-a-set .answer {
+        margin-top: 0.2em;
+        margin-left: 0.2em; }
+  .dashboard-page .journal-section .journal-entry-sidebar {
+    -ms-flex-item-align: stretch;
+    align-self: stretch;
+    text-align: left;
+    width: 25%;
+    box-sizing: border-box;
+    -ms-flex: 1;
+    flex: 1;
+    margin-right: 3%; }
+    .dashboard-page .journal-section .journal-entry-sidebar .journal-entries-list {
+      width: 100%;
+      overflow-y: scroll; }
+      .dashboard-page .journal-section .journal-entry-sidebar .journal-entries-list .journal-entry-item {
+        background: #e2e2e2;
+        width: 100%;
+        padding: 1em;
+        margin-bottom: 0.2em;
+        box-sizing: border-box; }
+      .dashboard-page .journal-section .journal-entry-sidebar .journal-entries-list .selected-entry {
+        background: #3591e6; }
+  .dashboard-page .journal-section .displayed-entry {
+    -ms-flex: 3;
+    flex: 3; }
+
+.health-questions-page h1 {
+  font-size: 3.5em;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.3em;
+  margin-top: 0.2em; }
+
+.health-questions-page h2 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #3591e6;
+  margin-bottom: 1em; }
+
+.health-questions-page .question-section {
+  text-align: center;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  width: 100%; }
+  .health-questions-page .question-section .answered-questions-sidebar {
+    -ms-flex: 1;
+    flex: 1;
+    -ms-flex-item-align: stretch;
+    align-self: stretch;
+    text-align: left;
+    width: 25%;
+    box-sizing: border-box;
+    margin-right: 3%; }
+  .health-questions-page .question-section .current-question {
+    -ms-flex: 3;
+    flex: 3;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-line-pack: center;
+    align-content: center; }
+    .health-questions-page .question-section .current-question .current-question-content {
+      width: 60%;
+      height: 60%;
+      min-height: 30%;
+      min-width: 10em;
+      margin-left: auto;
+      margin-right: 37%; }
+      .health-questions-page .question-section .current-question .current-question-content .ask-question-text {
+        height: 5em; }
+      .health-questions-page .question-section .current-question .current-question-content .answer-instructions {
+        margin-bottom: 0.3em; }
+      .health-questions-page .question-section .current-question .current-question-content .answer-button {
+        font-size: 1.8em;
+        padding: 0.4em;
+        width: 100%;
+        margin-bottom: 0.3em;
+        background: #b8e4f3; }
+      .health-questions-page .question-section .current-question .current-question-content .selected {
+        background: #1bff1b; }
+      .health-questions-page .question-section .current-question .current-question-content .question-nav-buttons {
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -ms-flex-item-align: end;
+        align-self: flex-end;
+        width: 100%;
+        margin-top: 1em; }
+        .health-questions-page .question-section .current-question .current-question-content .question-nav-buttons button {
+          background: #3591e6;
+          color: white;
+          font-weight: bold;
+          width: 49.5%;
+          padding-top: 0.7em;
+          padding-bottom: 0.7em;
+          -ms-flex-item-align: center;
+          align-self: center; }
+          .health-questions-page .question-section .current-question .current-question-content .question-nav-buttons button.finish-button {
+            background: red; }
+
+/*# sourceMappingURL=healthapp.css.map */

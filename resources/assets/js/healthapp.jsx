@@ -8,8 +8,10 @@ import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router';
 const Login = require('./components/login/login.jsx');
 const Dashboard = require('./components/dashboard/dashboard.jsx');
 const HealthQuestions = require('./components/health_questions/health_questions.jsx');
+const SessionStore = require('./stores/session_store.js');
 
 const HealthApp = React.createClass({
+
   render() {
     return (
       <div>
@@ -19,12 +21,14 @@ const HealthApp = React.createClass({
   }
 });
 
-const _ensureLoggedIn = function(nextState, replace) {
-  // if (!SessionStore.isUserLoggedIn()) {
+function _ensureLoggedIn(nextState, replace) {
   if (false) {
     replace("/login");
   }
-};
+  // if (!SessionStore.loggedIn()) {
+  //   replace("/login");
+  // }
+}
 
 const routes = (
   <Route path="/" component={HealthApp}>
@@ -34,8 +38,12 @@ const routes = (
   </Route>
 );
 
-//need to get user
+function retrieveUser() {
+
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  retrieveUser();
 
   ReactDOM.render((
     <Router history={hashHistory}>

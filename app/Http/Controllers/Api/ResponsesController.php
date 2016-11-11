@@ -6,27 +6,33 @@ use App\Http\Controllers\Controller;
 use App\Response;
 use App\Question;
 use App\Answer;
+use App\User;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class ResponsesController extends Controller
 {
-  // public function index() {
-  //   return Response::all();
-  // }
+  public function create(Request $request) {
+    $journalEntryId = $request->journal_entry_id;
+    $questionId = $request->question_id;
+    $answerId = $request->answer_id;
 
-  public function create() {
-    $userId = User::all()->first()->id;
+    $response = Response::where('journal_entry_id', $journalEntryId)
+      ->where('question_id', $questionId)
+      ->first();
 
-    $response = new Response;
-    $response->user_id = $userId;
-    $response->question_id = Input::get('question_id');
-    $response->answer_id = Input::get('answer_id');
-    
-    if ($response->save();) {
-      return $response->id;
+    if (!$response){
+       $response = new Response;
+       $response->journal_entry_id = $journalEntryId;
+       $response->question_id = $questionId;
     }
+
+    $response->answer_id = $answerId;
+
+    $response->save();
+
+    return $response->toArray();
   }
 
 }

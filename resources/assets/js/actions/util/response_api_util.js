@@ -5,6 +5,7 @@ module.exports = {
     $.ajax({
       url: 'api/responses',
       type: 'POST',
+      data: responseData,
       dataType: 'json',
       success: success
     });

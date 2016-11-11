@@ -1,19 +1,19 @@
 module.exports = {
-  signUp(user, success, error) {
+  signUp(userData, success, error) {
     $.ajax({
-      url: "/api/users",
+      url: "/api/register",
       type: "POST",
-      data: user,
+      data: userData,
       dataType: "json",
       success: success
     });
   },
 
-  login(user, success, error) {
+  login(userData, success, error) {
     $.ajax({
-      url: "/api/session",
+      url: "/api/login",
       type: "POST",
-      data: user,
+      data: userData,
       dataType: "json",
       success: success
     });

@@ -120,23 +120,49 @@ class DatabaseSeeder extends Seeder
                         Response::create([
                           'journal_entry_id' => $journal_entry_2->id,
                           'question_id' => $question_1->id,
-                          'answer_id' => $answer_1_1->id
+                          'answer_id' => $answer_1_2->id
                         ]);
 
                         Response::create([
                           'journal_entry_id' => $journal_entry_2->id,
                           'question_id' => $question_2->id,
-                          'answer_id' => $answer_2_1->id
+                          'answer_id' => $answer_2_2->id
                         ]);
 
                         Response::create([
                           'journal_entry_id' => $journal_entry_2->id,
                           'question_id' => $question_3->id,
-                          'answer_id' => $answer_3_1->id
+                          'answer_id' => $answer_3_2->id
                         ]);
 
                         Response::create([
                           'journal_entry_id' => $journal_entry_2->id,
+                          'question_id' => $question_4->id,
+                          'answer_id' => $answer_4_2->id
+                        ]);
+
+      $journal_entry_3 = Journal_Entry::create(['user_id' => $user->id]);;
+
+                        Response::create([
+                          'journal_entry_id' => $journal_entry_3->id,
+                          'question_id' => $question_1->id,
+                          'answer_id' => $answer_1_3->id
+                        ]);
+
+                        Response::create([
+                          'journal_entry_id' => $journal_entry_3->id,
+                          'question_id' => $question_2->id,
+                          'answer_id' => $answer_2_3->id
+                        ]);
+
+                        Response::create([
+                          'journal_entry_id' => $journal_entry_3->id,
+                          'question_id' => $question_3->id,
+                          'answer_id' => $answer_3_1->id
+                        ]);
+
+                        Response::create([
+                          'journal_entry_id' => $journal_entry_3->id,
                           'question_id' => $question_4->id,
                           'answer_id' => $answer_4_1->id
                         ]);

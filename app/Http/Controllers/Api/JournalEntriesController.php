@@ -14,14 +14,14 @@ class JournalEntriesController extends Controller {
     $userId = User::all()->first()->id;
 
     return Journal_Entry::withCount('Responses')
+      ->with('responses.question', 'responses.answer')
       ->whereRaw('responses_count > 0')
       ->get();
   }
 
   public function show(Request $request, $entryId) {
       return Journal_Entry::findOrFail($entryId)
-        ->with('responses.question')
-        ->with('responses.answer')
+        ->with('responses.question', 'responses.answer')
         ->first();
   }
 

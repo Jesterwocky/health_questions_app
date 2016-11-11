@@ -5,14 +5,15 @@ const JounalEntryIndexItem = require('./journal_entries_index_item.jsx');
 module.exports = React.createClass({
 
   selectEntry() {
-    this.props.selectEntry(this.props.entryNum);
+    this.props.selectEntry(this.props.entryId);
+    console.log("Click in index item");
   },
 
   render() {
-    let classes = "journal-entries-index";
+    let classes = "journal-entry-item";
 
     if (this.props.selected) {
-      classes = "journal-entries-index selected-entry";
+      classes = "journal-entry-item selected-entry";
     }
 
     return (

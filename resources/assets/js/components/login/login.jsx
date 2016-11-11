@@ -7,10 +7,12 @@ const NewAccount = require('./new_account.jsx');
 module.exports = React.createClass({
   render() {
     return(
-      <div className={"login-page"}>
-        <h1>Health Journey</h1>
-        <ExistingAccount/>
-        <NewAccount/>
+      <div className="login-page">
+        <h1>Health Journal</h1>
+        <div className="login-boxes">
+          <ExistingAccount/>
+          <NewAccount/>
+        </div>
       </div>
     );
   }

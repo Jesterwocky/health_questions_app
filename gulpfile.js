@@ -17,6 +17,6 @@ require('laravel-elixir-webpack');
 
 elixir(function(mix) {
     mix.sass('healthapp.scss');
-    mix.webpack('healthapp.jsx');
+    // mix.webpack('healthapp.jsx');
     // mix.browserify('healthapp.js');
 });

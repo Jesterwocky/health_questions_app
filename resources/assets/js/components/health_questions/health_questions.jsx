@@ -7,14 +7,15 @@ const QuestionActions = require('../../actions/question_actions.js');
 const JournalEntryActions = require('../../actions/journal_entry_actions.js');
 const AnsweredQuestion = require('./answered_question.jsx');
 const CurrentQuestion = require('./current_question.jsx');
+const ResponseStore = require('../../stores/response_store.js');
 
 module.exports = React.createClass({
   getInitialState() {
     return({
       questions: QuestionStore.all(),
       journalEntryId: null,
-      currentQuestion: 0,
-      answeredQuestions: []
+      currentQuestionInd: 0,
+      answeredQIds: []
     });
   },
 
@@ -27,7 +28,7 @@ module.exports = React.createClass({
 
   _handleQuestionChange() {
     this.setState({
-      questions: QuestionStore.all()
+      questions: QuestionStore.all(),
     });
   },
 
@@ -41,49 +42,85 @@ module.exports = React.createClass({
 
   nextQuestion(event) {
     event.preventDefault();
-    if (this.state.currentQuestion + 1 < this.state.questions.length) {
+    let nextQuestionInd = this.state.currentQuestionInd + 1;
+
+    if (nextQuestionInd < this.state.questions.length) {
+      if (!this.state.answeredQIds.includes(this.state.currentQuestionInd)) {
+        this.state.answeredQIds.push(this.state.currentQuestionInd);
+      }
+      // let currentQuestionId = this.state.questions[this.state.currentQuestionInd].id;
+      // if (!this.state.answeredQIds.includes(currentQuestionId)){
+      //      this.state.answeredQIds.push(this.state.currentQuestionInd);
+      // }
+      // this.state.answeredQIds[this.state.currentQuestionInd] = true;
       this.setState({
-        currentQuestion: this.state.currentQuestion += 1
+        currentQuestionInd: nextQuestionInd,
       });
     }
   },
 
   prevQuestion(event) {
     event.preventDefault();
-    if (this.state.currentQuestion - 1 >= 0) {
+    if (this.state.currentQuestionInd - 1 >= 0) {
       this.setState({
-        currentQuestion: this.state.currentQuestion - 1
+        currentQuestionInd: this.state.currentQuestionInd - 1
       });
     }
   },
 
   answeredQuestions() {
-    return this.state.answeredQuestions.map((question, i) => {
-      return (
-        <AnsweredQuestion
-          key={i}
-          question={question}
-        />
-      );
-    });
+    let questions;
+
+    if (this.state.answeredQIds.length > 0) {
+      // let answeredQuestions = this.state.answeredQIds.map((id) => {
+      //   return (QuestionStore.find(id));
+      // });
+
+      let answeredQuestions = this.state.answeredQIds.map((ind) => {
+        return this.state.questions[ind];
+      });
+
+      questions = answeredQuestions.map((question, i) => {
+        let answer = ResponseStore.questionResponseText(question.id);
+
+        return (
+          <AnsweredQuestion
+            key={i}
+            question={question.question_text}
+            answer={answer}
+          />
+        );
+      });
+    }
+    return (
+      <div className="group answered-questions-sidebar">
+        <h3>Seen Questions</h3>
+        {questions}
+      </div>
+    );
   },
 
   currentQuestion() {
-    let questionText, questionId, answerList;
+    let questionText, questionId, answerList, isFirstQuestion, isFinalQuestion;
     if (this.state.questions.length >0) {
-      questionText = this.state.questions[this.state.currentQuestion].question_text;
-      questionId = this.state.questions[this.state.currentQuestion].id;
-      answerList = this.state.questions[this.state.currentQuestion].answers;
+      questionText = this.state.questions[this.state.currentQuestionInd].question_text;
+      questionId = this.state.questions[this.state.currentQuestionInd].id;
+      answerList = this.state.questions[this.state.currentQuestionInd].answers;
+      isFirstQuestion = this.state.currentQuestionInd === 0;
+      isFinalQuestion = this.state.currentQuestionInd === this.state.questions.length - 1;
     }
+
     return(
       <CurrentQuestion
         journalEntryId={this.state.journalEntryId}
         questionText={questionText}
         questionId={questionId}
         answers={answerList}
+        isFirstQuestion={isFirstQuestion}
+        isFinalQuestion={isFinalQuestion}
         nextQuestion={this.nextQuestion}
         prevQuestion={this.prevQuestion}
-      />
+        />
     );
   },
 
@@ -92,12 +129,12 @@ module.exports = React.createClass({
     return(
       <div className="health-questions-page">
         <h1>Health Quiz</h1>
-        <p>Entry id {this.state.journalEntryId}</p>
-        <p>Created at {this.state.entryDate}</p>
-        <div className="answered-health-questions">
+        <div className="question-section">
           {this.answeredQuestions()}
-        </div>
           {this.currentQuestion()}
+        </div>
+        <p>Entry id {this.state.journalEntryId}</p>
+        <h3>Created at {this.state.entryDate}</h3>
       </div>
     );
   }

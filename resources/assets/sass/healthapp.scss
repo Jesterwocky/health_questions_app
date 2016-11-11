@@ -1,0 +1,325 @@
+//reset
+
+html {
+  height: 100%;
+}
+
+html, body, header, nav, h1, a,
+ul, li, strong, main, button, i,
+section, img, div, h2, p, form,
+fieldset, label, input, textarea,
+span, article, footer, time, small {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: inherit;
+  vertical-align: inherit;
+  box-sizing: inherit;
+  background: transparent;
+  font-family: sans-serif;
+  font-size: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+input[type="password"],
+input[type="email"],
+input[type="text"],
+input[type="submit"],
+textarea,
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-sizing: border-box;
+}
+
+button,
+input[type="submit"], a {
+  cursor: pointer;
+}
+
+//clearfix
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+// actual styling
+
+.login-page {
+  width: 80%;
+  margin-left:auto;
+  margin-right: auto;
+
+  h1 {
+    font-size: 3.5em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.3em;
+    margin-top: 0.2em;
+  }
+
+  h2 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.2em;
+    text-align: center;
+  }
+
+  p {
+    margin-bottom: 0.1em;
+    text-align: center;
+  }
+
+  .login-boxes {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: space-around;
+
+    .returning-user-sign-in, .new-user-sign-up {
+      background: #dff1f5;
+      min-width: 10em;
+      max-width: 20em;
+      flex: 1;
+      border-radius: 1.5px;
+      padding: 2em;
+    }
+
+    .returning-user-sign-in {
+      margin-right: 1%;
+      background: #dff1f5;
+    }
+
+    .new-user-sign-up {
+      margin-left: 1%;
+    }
+
+    form {
+      text-align: center;
+      display: inline-flex;
+      flex-direction: column;
+      width: 100%;
+      margin-left:auto;
+      margin-right:auto;
+
+      label {
+        font-size: 0.9em;
+        margin-top: 0.8em;
+      }
+
+      .text-field {
+        text-align: left;
+        color: #3591e6;
+        font-size: 1.6em;
+        background: white;
+        padding: 0.3em;
+        width: 100%;
+        border: 2px solid #e8ecf9;
+        border-radius: 2px;
+        box-sizing: border-box;
+        margin-top: 0.3em;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;      }
+
+      .login-button {
+        color: white;
+        font-weight: bold;
+        background: #3591e6;
+        padding: 0.7em;
+        margin-top: 1em;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+  }
+}
+
+.dashboard-page {
+
+  h1 {
+    font-size: 3.5em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.3em;
+    margin-top: 0.2em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #3591e6;
+  }
+
+  h3 {
+    font-size: 1em;
+    margin: 0;
+  }
+
+  h4 {
+    margin-bottom: 1.6em;
+    margin-top: 0.1em;
+    color: #3591e6;
+  }
+
+  .journal-section {
+    display: inline-flex;
+    align-content: flex-start;
+    width: 100%;
+
+    .displayed-entry {
+      width: 80%;
+
+      .q-and-a-set {
+        margin-top: 1.2em;
+
+        .question {
+          font-weight: bold;
+        }
+
+        .answer {
+          margin-top: 0.2em;
+          margin-left: 0.2em;
+        }
+      }
+    }
+
+    .journal-entry-sidebar {
+      align-self: stretch;
+      text-align: left;
+      width: 25%;
+      box-sizing: border-box;
+      flex: 1;
+      margin-right: 3%;
+
+      .journal-entries-list {
+        width: 100%;
+        overflow-y: scroll;
+
+        .journal-entry-item {
+          background: #e2e2e2;
+          width: 100%;
+          padding: 1em;
+          margin-bottom: 0.2em;
+          box-sizing: border-box;
+        }
+
+        .selected-entry {
+          background: #3591e6;
+        }
+      }
+    }
+
+    .displayed-entry {
+      flex: 3;
+    }
+  }
+}
+
+.health-questions-page {
+
+  h1 {
+    font-size: 3.5em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.3em;
+    margin-top: 0.2em;
+  }
+
+  h2 {
+    font-size: 2em;
+    font-weight: bold;
+    color: #3591e6;
+    margin-bottom: 1em;
+  }
+
+  .question-section {
+    text-align: center;
+    display: inline-flex;
+    align-content: flex-start;
+    width: 100%;
+
+    .answered-questions-sidebar {
+      flex: 1;
+      align-self: stretch;
+      text-align: left;
+      width: 25%;
+      box-sizing: border-box;
+      margin-right: 3%;
+    }
+
+    .current-question {
+      flex: 3;
+      display: inline-flex;
+      align-content: center;
+
+      .current-question-content {
+        width: 60%;
+        height: 60%;
+        min-height: 30%;
+        min-width: 10em;
+        margin-left: auto;
+        margin-right: 37%;
+
+        .ask-question-text {
+          height: 5em;
+        }
+
+        .answer-instructions {
+          margin-bottom: 0.3em;
+        }
+
+        .answer-button {
+          font-size: 1.8em;
+          padding: 0.4em;
+          width: 100%;
+          margin-bottom: 0.3em;
+          background: #b8e4f3;
+        }
+
+        .selected {
+          background: #1bff1b;
+        }
+
+        .question-nav-buttons {
+          display: inline-flex;
+          justify-content: space-between;
+          align-self: flex-end;
+          width: 100%;
+          margin-top: 1em;
+
+          button {
+            background: #3591e6;
+            color: white;
+            font-weight: bold;
+            width: 49.5%;
+            padding-top: 0.7em;
+            padding-bottom: 0.7em;
+            align-self: center;
+
+            &.finish-button {
+              background: red;
+            }
+          }
+        }
+      }
+    }
+  }
+}

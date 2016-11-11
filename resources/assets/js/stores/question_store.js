@@ -28,6 +28,10 @@ QuestionStore.all = function() {
   return questions;
 };
 
+QuestionStore.questionIds = function() {
+  return Object.keys(_questions);
+};
+
 QuestionStore.find = function(questionId) {
   return _questions[questionId];
 };

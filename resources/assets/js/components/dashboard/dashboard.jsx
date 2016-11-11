@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const JournalEntryStore = require('../../stores/journal_entry_store.js');
-const fullJournalEntryStore = require('../../stores/full_journal_entry_store.js');
+const FullJournalEntryStore = require('../../stores/full_journal_entry_store.js');
 const JournalEntryActions = require('../../actions/journal_entry_actions.js');
 const JournalEntriesIndex = require('./journal_entries_index.jsx');
 const CurrentJournalEntry = require('./current_journal_entry.jsx');
@@ -10,37 +10,36 @@ module.exports = React.createClass({
   getInitialState() {
     return ({
       journalEntries: JournalEntryStore.all(),
-      displayedEntry: 0
+      currentEntryId: null,
+      currentEntry: null
     });
   },
 
   componentDidMount() {
     this.journalEntryListener = JournalEntryStore.addListener(this._handleEntriesChange);
-    this.displayEntryListener = fullJournalEntryStore.addListener(this._handleDisplayChange);
+    // this.displayEntryListener = FullJournalEntryStore.addListener(this._handleDisplayChange);
     JournalEntryActions.getJournalEntries();
   },
 
   _handleEntriesChange() {
-    let entries = JournalEntryStore.all();
-    JournalEntryActions.getJournalEntry(
-      entries.reverse()[this.state.displayedEntry].id
-    );
+    let entries = JournalEntryStore.all().reverse();
+    let currentEntryId = JournalEntryStore.latestEntryId();
+    let currentEntry = JournalEntryStore.find(currentEntryId);
 
     this.setState({
-      journalEntries: entries.reverse()
+      journalEntries: entries,
+      currentEntryId: currentEntryId,
+      currentEntry: currentEntry
     });
   },
 
-  _handleDisplayChange() {
-    // this is just here to force rerender after current entry is fetched
+  selectEntry(entryId) {
+    console.log("Click in dashboard");
+    let currentEntry = JournalEntryStore.find(entryId);
     this.setState({
-      displayedEntry: this.state.displayedEntry
+      currentEntryId: entryId,
+      currentEntry: currentEntry
     });
-  },
-
-  selectEntry(entryNum) {
-    journalEntryActions.getEntry(this.state.journalEntries[entryNum].id);
-    this.state.displayedEntry = entryNum;
   },
 
   entriesIndex() {
@@ -48,7 +47,8 @@ module.exports = React.createClass({
       return(
         <JournalEntriesIndex
           journalEntries={this.state.journalEntries}
-          displayedEntry={this.state.displayedEntry}
+          currentEntryId={this.state.currentEntryId}
+          selectEntry={this.selectEntry}
         />
       );
     }
@@ -57,9 +57,13 @@ module.exports = React.createClass({
   render() {
     return(
       <div className="dashboard-page">
-        <h1>My Health Journal</h1>
-        {this.entriesIndex()}
-        <CurrentJournalEntry/>
+        <h1>Health Journal</h1>
+        <div className="journal-section">
+          {this.entriesIndex()}
+          <CurrentJournalEntry
+            journalEntry={this.state.currentEntry}
+          />
+        </div>
       </div>
     );
   }

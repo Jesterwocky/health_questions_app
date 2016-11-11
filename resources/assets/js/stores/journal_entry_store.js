@@ -5,7 +5,13 @@ const Constants = require('../actions/constants.js');
 const JournalEntryStore = new Store(Dispatcher);
 
 let _inProgressEntry = [];
+
 let _journalEntries = {};
+// let _currentJournalEntry = [];
+
+// function _setCurrentJournalEntry(journalEntry) {
+//   _currentJournalEntry = journalEntry;
+// }
 
 function _resetJournalEntries(journalEntries) {
   _journalEntries = {};
@@ -15,13 +21,13 @@ function _resetJournalEntries(journalEntries) {
   });
 }
 
-function _addJournalEntry(entry) {
-  _journalEntries[entry.id] = entry;
-}
-
 function _setInProgressEntry(entry) {
   _inProgressEntry = entry;
 }
+
+// fullJournalEntryStore.currentEntry = function() {
+//   return _currentJournalEntry;
+// };
 
 JournalEntryStore.inProgressEntry = function() {
   return _inProgressEntry;
@@ -43,6 +49,10 @@ JournalEntryStore.find = function(entryId) {
   return _journalEntries[entryId];
 };
 
+JournalEntryStore.latestEntryId = function() {
+  return Object.keys(_journalEntries).reverse()[0];
+};
+
 JournalEntryStore.__onDispatch = function(payload) {
   switch (payload.actionType) {
     case Constants.NEW_ENTRY_INFO_RECEIVED:
@@ -54,7 +64,7 @@ JournalEntryStore.__onDispatch = function(payload) {
       this.__emitChange();
       break;
     case Constants.JOURNAL_ENTRY_RECEIVED:
-      _addJournalEntry(payload.journalEntry);
+      _setCurrentJournalEntry(payload.journalEntry);
       this.__emitChange();
       break;
   }

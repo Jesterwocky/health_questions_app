@@ -1,14 +1,14 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
+const SessionActions = require('../../actions/session_actions.js');
 
 module.exports = React.createClass({
-    // getInitialState() {
-    //   return ({
-    //     username: "",
-    //     password: "",
-    //     name: "",
-    //   });
-    // }
+    getInitialState() {
+      return ({
+        email: "",
+        password: "",
+      });
+    },
 
     updateEmail(event) {
       this.setState({
@@ -22,23 +22,29 @@ module.exports = React.createClass({
       });
     },
 
-    signIn(event) {
+    logIn(event) {
       event.preventDefault();
+      SessionActions.logIn({
+        email: this.state.email,
+        password: this.state.password
+      });
     },
 
     render() {
       return(
         <div className="returning-user-sign-in">
           <h2>Sign In</h2>
-          <p>Been here before? Welcome back!</p>
 
-          <label>Email</label>
-          <input type="text" onChange={this.updateEmail}/>
+          <form onSubmit={this.logIn}>
+            <label>email</label>
+            <input type="text" onChange={this.updateEmail} className="text-field"/>
 
-          <label>Password</label>
-          <input type="password" onChange={this.updatePassword}/>
+            <label>password</label>
+            <input type="password" onChange={this.updatePassword} className="text-field"/>
 
-          <button onClick={this.signIn}>Sign In</button>
+            <input type="submit" value="Sign In" className="login-button"/>
+          </form>
+
         </div>
       );
     }

@@ -37,18 +37,21 @@ module.exports = React.createClass({
     return(
       <div className="new-user-sign-up">
         <h2>Create Account</h2>
-        <p>New to the site? Get started here!</p>
 
-        <label>Name</label>
-        <input type="text" onChange={this.updateName}/>
+        <form onSubmit={this.createAccount}>
+          <label>name</label>
+          <input type="text" onChange={this.updateName} className="text-field"/>
 
-        <label>Email</label>
-        <input type="text" onChange={this.updateEmail}/>
+          <label>email</label>
+          <input type="text" onChange={this.updateEmail} className="text-field"/>
 
-        <label>Password</label>
-        <input type="password" onChange={this.updatePassword}/>
+          <label>Password</label>
+          <input type="password" onChange={this.updatePassword} className="text-field"/>
 
-        <button onClick={this.createAccount}>Sign In</button>
+          <input type="submit" value="Sign Up" className="login-button"/>
+        </form>
+
+
       </div>
     );
   }
