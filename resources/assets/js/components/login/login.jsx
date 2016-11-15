@@ -27,6 +27,7 @@ module.exports = React.createClass({
         <h1>Health Journal</h1>
         <div className="login-boxes">
           <ExistingAccount/>
+          <NewAccount/>
         </div>
       </div>
     );

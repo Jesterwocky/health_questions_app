@@ -3,13 +3,13 @@ const ReactDOM = require('react-dom');
 const SessionActions = require('../../actions/session_actions.js');
 
 module.exports = React.createClass({
-  // getInitialState() {
-  //   return ({
-  //     username: "",
-  //     password: "",
-  //     name: "",
-  //   });
-  // }
+  getInitialState() {
+    return ({
+      username: "",
+      password: "",
+      name: "",
+    });
+  },
 
   updateEmail(event) {
     this.setState({

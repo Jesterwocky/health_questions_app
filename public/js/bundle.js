@@ -26504,7 +26504,8 @@
 	      React.createElement(
 	        'div',
 	        { className: 'login-boxes' },
-	        React.createElement(ExistingAccount, null)
+	        React.createElement(ExistingAccount, null),
+	        React.createElement(NewAccount, null)
 	      )
 	    );
 	  }
@@ -38530,15 +38531,13 @@
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
-	
-	  // getInitialState() {
-	  //   return ({
-	  //     username: "",
-	  //     password: "",
-	  //     name: "",
-	  //   });
-	  // }
-	
+	  getInitialState: function getInitialState() {
+	    return {
+	      username: "",
+	      password: "",
+	      name: ""
+	    };
+	  },
 	  updateEmail: function updateEmail(event) {
 	    this.setState({
 	      email: event.currentTarget.value

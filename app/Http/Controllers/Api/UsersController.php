@@ -29,7 +29,7 @@ class UsersController extends Controller {
     );
 
     if ($validator->passes()) {
-      return User::create([
+      User::create([
         'name' => $credentials['name'],
         'email' => $credentials['email'],
         'password' => Hash::make($credentials['password']),
