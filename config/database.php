@@ -1,11 +1,11 @@
 <?php
 
-$url = parse_url(getenv("DATABASE_URL"));
-
-$host = $url["host"];
-$username = $url["user"];
-$password = $url["pass"];
-$database = substr($url["path"], 1);
+// $url = parse_url(getenv("DATABASE_URL"));
+//
+// $host = $url["host"];
+// $username = $url["user"];
+// $password = $url["pass"];
+// $database = substr($url["path"], 1);
 
 return [
 
@@ -33,7 +33,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'psql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -75,18 +75,18 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => $host,
-            // 'host' => env('DB_HOST', 'localhost'),
-            'database' => $database,
-            // 'database' => env('DB_DATABASE', 'forge'),
-            'username' => $username,
-            // 'username' => env('DB_USERNAME', 'forge'),
-            'password' => $password,
-            // 'password' => env('DB_PASSWORD', ''),
+            // 'host' => $host,
+            'host' => env('DB_HOST', 'localhost'),
+            // 'database' => $database,
+            'database' => env('DB_DATABASE', 'healthapp'),
+            // 'username' => $username,
+            'username' => env('DB_USERNAME', 'postgres'),
+            // 'password' => $password,
+            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => env('DB_PGSQL_SCHEMA','public'),
-            // 'port' => env('DB_PORT', '5432'),
+            'port' => env('DB_PORT', '5432'),
         ],
 
     ],

@@ -15,6 +15,7 @@ class ResponsesController extends Controller
 {
   public function create(Request $request) {
     $journalEntryId = $request->journal_entry_id;
+        
     $questionId = $request->question_id;
     $answerId = $request->answer_id;
 

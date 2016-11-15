@@ -11,11 +11,11 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-      DB::table('users')->delete();
-      DB::table('questions')->delete();
-      DB::table('answers')->delete();
-      DB::table('journal_entries')->delete();
       DB::table('responses')->delete();
+      DB::table('journal_entries')->delete();
+      DB::table('answers')->delete();
+      DB::table('questions')->delete();
+      DB::table('users')->delete();
 
       $user = User::create([
         'name' => 'Chester McTesterton',

@@ -25,6 +25,6 @@ class User extends Authenticatable
     ];
 
     public function journal_entries() {
-      return $this->hasMany('App\Journal_Entries');
+      return $this->hasMany('App\Journal_Entry');
     }
 }

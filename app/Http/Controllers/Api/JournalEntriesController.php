@@ -13,14 +13,23 @@ use App\Http\Requests;
 class JournalEntriesController extends Controller {
   public function index() {
     if (Auth::check()) {
-      # code...
       $userId = Auth::id();
 
-      return Journal_Entry::withCount('Responses')
-      ->with('responses.question', 'responses.answer')
-      ->where('user_id', $userId)
-      ->whereRaw('responses_count > 0')
-      ->get();
+      return Journal_Entry::withCount('responses')
+        ->with('responses.question', 'responses.answer')
+        ->where('user_id', $userId)
+        // ->whereRaw('responses_count > 0')
+        ->get();
+
+      // SELECT *, count(*) from Journal_Entries
+      // LEFT JOIN Responses ON Responses.journal_entry_id = Journal_Entries.id
+      // GROUP BY Journal_Entries.id
+
+      // return Journal_Entry::withCount('responses')
+      // ->with('responses.question', 'responses.answer')
+      // ->where('user_id', $userId)
+      // ->whereRaw('count(*) > 0')
+      // ->get();
     }
 
     else {

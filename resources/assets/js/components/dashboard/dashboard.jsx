@@ -11,7 +11,6 @@ const NavBar = require('../nav_bar.jsx');
 
 module.exports = React.createClass({
   getInitialState() {
-    debugger
     return ({
       journalEntries: JournalEntryStore.all(),
       currentEntryId: null,
