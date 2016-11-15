@@ -9,7 +9,6 @@ use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use Javascript;
 
 class SessionsController extends Controller {
 
@@ -18,9 +17,7 @@ class SessionsController extends Controller {
     $password = $request->password;
 
     if (Auth::attempt(['email' => $email, 'password' => $password])) {
-      $user = Auth::getUser()
-      // Javascript::put(['username' => $user->name, 'email' => $user->email]);
-      return $user;
+      return Auth::getUser();
     }
 
     else {

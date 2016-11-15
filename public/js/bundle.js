@@ -88,7 +88,7 @@
 	
 	function retrieveUser() {
 	  // Note: user object keys contains strange characters
-	  if (user) {
+	  if (user.length > 0) {
 	    var userDetails = user[Object.keys(user)[9]];
 	    SessionActions.receiveCurrentUser(userDetails);
 	  }
