@@ -75,13 +75,13 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => $host,
+            'host' => env('DB_HOST', $host),
             // 'host' => env('DB_HOST', 'localhost'),
-            'database' => $database,
+            'database' => env('DB_DATABASE', $database),
             // 'database' => env('DB_DATABASE', 'healthapp'),
-            'username' => $username,
+            'username' => env('DB_USERNAME', $username),
             // 'username' => env('DB_USERNAME', 'postgres'),
-            'password' => $password,
+            'password' => env('DB_PASSWORD', $password),
             // 'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
