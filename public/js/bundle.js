@@ -59,6 +59,7 @@
 	var Dashboard = __webpack_require__(252);
 	var HealthQuestions = __webpack_require__(261);
 	var SessionStore = __webpack_require__(229);
+	var SessionActions = __webpack_require__(248);
 	
 	var HealthApp = React.createClass({
 	  displayName: 'HealthApp',
@@ -85,7 +86,13 @@
 	  React.createElement(_reactRouter.Route, { path: 'health_questions', component: HealthQuestions, onEnter: _ensureLoggedIn })
 	);
 	
-	function retrieveUser() {}
+	function retrieveUser() {
+	  // Note: user object keys contains strange characters
+	  if (user) {
+	    var userDetails = user[Object.keys(user)[9]];
+	    SessionActions.receiveCurrentUser(userDetails);
+	  }
+	}
 	
 	document.addEventListener('DOMContentLoaded', function () {
 	  retrieveUser();

@@ -9,6 +9,7 @@ const Login = require('./components/login/login.jsx');
 const Dashboard = require('./components/dashboard/dashboard.jsx');
 const HealthQuestions = require('./components/health_questions/health_questions.jsx');
 const SessionStore = require('./stores/session_store.js');
+const SessionActions = require('./actions/session_actions.js');
 
 const HealthApp = React.createClass({
 
@@ -36,7 +37,11 @@ const routes = (
 );
 
 function retrieveUser() {
-
+  // Note: user object keys contains strange characters
+  if (user) {
+    let userDetails = user[Object.keys(user)[9]];
+    SessionActions.receiveCurrentUser(userDetails);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -16,10 +16,16 @@ class JournalEntriesController extends Controller {
       $userId = Auth::id();
 
       return Journal_Entry::withCount('responses')
-        ->with('responses.question', 'responses.answer')
-        ->where('user_id', $userId)
-        // ->whereRaw('responses_count > 0')
-        ->get();
+      ->with('responses.question', 'responses.answer')
+      ->where('user_id', $userId)
+      // ->whereRaw('responses_count > 0')
+      ->get();
+
+      // return Journal_Entry::leftJoin('responses', 'responses.id', '=', 'journal_entries.id')
+      //   ->with('responses.question', 'responses.answer')
+      //   ->where('user_id', $userId)
+      //   ->get();
+
 
       // SELECT *, count(*) from Journal_Entries
       // LEFT JOIN Responses ON Responses.journal_entry_id = Journal_Entries.id
